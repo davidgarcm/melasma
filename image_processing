@@ -1,0 +1,24 @@
+from scipy import misc
+import numpy as np 
+from scipy import ndimage
+import matplotlib 
+import matplotlib.pyplot as plt 
+from matplotlib.colors import rgb_to_hsv
+
+
+
+# 1. Read the image 
+P1AT_RGB = misc.imread("paciente_uno_frente_antes.jpg", mode  = "RGB")
+
+# 2. Convert RGB to HSV 
+P1AR_HSV = matplotlib.colors.rgb_to_hsv(P1AT_RGB)
+
+# 3. Plot both images 
+f, axarr = plt.subplots(2)
+axarr[0].imshow(P1AT_RGB)
+axarr[0].set_title('Paciente RGB uno UV antes')
+
+axarr[1].imshow(P1AR_HSV)
+axarr[1].set_title('Paciente HSV uno UV antes')
+
+plt.show()
