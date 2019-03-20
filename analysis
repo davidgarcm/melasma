@@ -1,0 +1,54 @@
+# Import libraries 
+
+import csv
+import pandas as pd
+import seaborn as sns
+import numpy as np
+from pprint import pprint 
+import matplotlib.pyplot as plt
+import scipy as sp
+from scipy.stats import ttest_ind
+from scipy.stats import wilcoxon
+	
+# Read .csv doc from origin 
+db = pd.read_csv('final_db_melasma.csv', encoding='ISO-8859-1')
+
+print(list(db))
+print('The mean age of the patients is: ', db['Edad'].mean(), ', median: ', 
+	db['Edad'].median(), ', SD = ', db['Edad'].std())
+print('Fitzpatrick skin classification: ', db['Fitzpatrick'].value_counts(normalize=True) * 100)
+print('The aparition of melasma related with pregnancy was: ', db['Aparicion'].value_counts
+	(), '1 being before, 2 during and 3 after pregnancy.', 'Percentages =', db['Aparicion'].value_counts
+	(normalize = True) * 100)
+print('Evlution time of the disease: ', db['Tiempo de evolucion del padecimiento'].mean(), ', median: ', 
+	db['Tiempo de evolucion del padecimiento'].median(), ', SD = ', db['Tiempo de evolucion del padecimiento'].std())
+print('MELASQL score before treatment: ', db['Puntaje de MELASQOL inicio'].mean(), ', median: ', 
+	db['Puntaje de MELASQOL inicio'].median(), ', SD = ', db['Puntaje de MELASQOL inicio'].std())
+print('MELASQL score after treatment: ', db['Puntaje de MELASQOL final '].mean(), ', median: ', 
+	db['Puntaje de MELASQOL final '].median(), ', SD = ', db['Puntaje de MELASQOL final '].std())
+# compare melasqol values
+stat, p = wilcoxon(db['Puntaje de MELASQOL inicio'], db['Puntaje de MELASQOL final '])
+print('Statistics=%.3f, p=%.3f' % (stat, p))
+# interpret
+alpha = 0.05
+if p > alpha:
+	print('No significal difference )')
+else:
+	print('significal difference')
+print('Total MASI score before treatment: ', db['Puntaje MASI Inicial'].mean(), ', median: ', 
+	db['Puntaje MASI Inicial'].median(), ', SD = ', db['Puntaje MASI Inicial'].std())
+print('Total MASI score after treatment: ', db['Puntaje MASI final'].mean(), ', median: ', 
+	db['Puntaje MASI final'].median(), ', SD = ', db['Puntaje MASI final'].std())
+stat, p = wilcoxon(db['Puntaje MASI Inicial'], db['Puntaje MASI final'])
+print('Statistics=%.3f, p=%.3f' % (stat, p))
+# interpret
+alpha = 0.05
+if p > alpha:
+	print('No significal difference )')
+else:
+	print('significal difference')
+
+print('The type of melasma of all patient was: ', db['Tipo de melasma'].value_counts
+	(), '1 being ?, 2 ? and 3 ?.', 'Percentages =', db['Tipo de melasma'].value_counts
+	(normalize = True) * 100)
+#print(db)
